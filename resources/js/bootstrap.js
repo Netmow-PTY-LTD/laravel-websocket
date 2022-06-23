@@ -34,14 +34,27 @@ import Echo from 'laravel-echo';
 
 window.Pusher = require('pusher-js');
 
+//live
 window.Echo = new Echo({
     broadcaster: 'pusher',
     key: process.env.MIX_PUSHER_APP_KEY,
     wsHost: window.location.hostname,
     wsPort: 6001,
-    forceTLS: false,
+    wssPort: 6001,
+    forceTLS: true,
     disableStats: true,
+    encrypted:true
 });
+
+//local enviroment
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: process.env.MIX_PUSHER_APP_KEY,
+//     wsHost: window.location.hostname,
+//     wsPort: 6001,
+//     forceTLS: false,
+//     disableStats: true,
+// });
 
 // window.Echo.channel('DemoChannel')
 // .listen('WebsocketDemoEvent', (e) => {
