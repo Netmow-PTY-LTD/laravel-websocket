@@ -55,7 +55,8 @@
             this.fetchMessages();
 
             Echo.join('chat')
-                .listen('MessagesSent', (event) => {
+                .listen('MessageSent',(event) => {
+                    console.log('success');
                     this.messages.push(event.message);
                 });
         },

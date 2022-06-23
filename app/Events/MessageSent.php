@@ -14,7 +14,9 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class MessageSent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
     public $message;
+    
     /**
      * Create a new event instance.
      *
