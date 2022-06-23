@@ -12,7 +12,13 @@
                     </ul>
                 </div>
 
-                <input type="text" class="form-control" name="message" placeholder="Enter your message...">
+                <input 
+                    @keyup.enter="sendMessage"
+                    v-model="newMessage"
+                    type="text" 
+                    class="form-control" 
+                    name="message" 
+                    placeholder="Enter your message...">
 
             </div>
             <span class="text-muted">user is typing...</span>
@@ -35,20 +41,40 @@
 
 <script>
     export default {
+
+        props:['user'],
+
         data() {
             return {
-                messages: ''
+                messages: [],
+                newMessage: ''
             }
         },
 
         created(){
             this.fetchMessages();
+
+            Echo.join('chat')
+                .listen('MessagesSent', (event) => {
+                    this.messages.push(event.message);
+                });
         },
         methods:{
             fetchMessages(){
                 axios.get('/messages').then(response => {
                     this.messages = response.data;
                 })
+            },
+
+            sendMessage(){
+                this.messages.push({
+                    user:this.user,
+                    message:this.newMessage
+                });
+
+                axios.post('/messages', {message:this.newMessage});
+
+                this.newMessage = '';
             }
         }
     }
