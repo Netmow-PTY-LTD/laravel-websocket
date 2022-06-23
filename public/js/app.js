@@ -2106,19 +2106,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['user'],
   data: function data() {
     return {
       messages: [],
-      newMessage: ''
+      newMessage: '',
+      users: []
     };
   },
   created: function created() {
     var _this = this;
 
     this.fetchMessages();
-    Echo.join('chat').listen('MessageSent', function (event) {
+    Echo.join('chat').here(function (user) {
+      console.log('here');
+      console.log(user);
+      _this.users = user;
+    }).joining(function (user) {
+      console.log('joining');
+      console.log(user);
+
+      _this.users.push(user);
+    }).leaving(function (user) {
+      console.log('leaving');
+      console.log(user);
+      _this.users = _this.users.filter(function (u) {
+        return u.id != user.id;
+      });
+    }).listen('MessageSent', function (event) {
       console.log('success');
 
       _this.messages.push(event.message);
@@ -26231,25 +26249,30 @@ var render = function () {
       _c("span", { staticClass: "text-muted" }, [_vm._v("user is typing...")]),
     ]),
     _vm._v(" "),
-    _vm._m(0),
-  ])
-}
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-4" }, [
+    _c("div", { staticClass: "col-4" }, [
       _c("div", { staticClass: "card card-default" }, [
         _c("div", { staticClass: "card-heaer" }, [
           _c("div", { staticClass: "card-body" }, [
-            _c("ul", [_c("li", { staticClass: "py-2" }, [_vm._v("Maksud")])]),
+            _c(
+              "ul",
+              _vm._l(_vm.users, function (user, index) {
+                return _c("li", { key: index, staticClass: "py-2" }, [
+                  _vm._v(
+                    "\n                            " +
+                      _vm._s(user.name) +
+                      "\n                        "
+                  ),
+                ])
+              }),
+              0
+            ),
           ]),
         ]),
       ]),
-    ])
-  },
-]
+    ]),
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 

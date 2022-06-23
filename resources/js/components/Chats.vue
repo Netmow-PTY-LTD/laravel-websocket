@@ -29,7 +29,9 @@
                 <div class="card-heaer">
                     <div class="card-body">
                         <ul>
-                            <li class="py-2">Maksud</li>
+                            <li class="py-2" v-for="(user , index) in users" :key="index">
+                                {{ user.name }}
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -47,7 +49,8 @@
         data() {
             return {
                 messages: [],
-                newMessage: ''
+                newMessage: '',
+                users: []
             }
         },
 
@@ -55,6 +58,21 @@
             this.fetchMessages();
 
             Echo.join('chat')
+                .here(user => {
+                    console.log('here');
+                    console.log(user);
+                    this.users = user;
+                })
+                .joining(user => {
+                    console.log('joining');
+                    console.log(user);
+                    this.users.push(user);
+                })
+                .leaving(user => {
+                    console.log('leaving');
+                    console.log(user);
+                    this.users = this.users.filter(u => u.id != user.id);
+                })
                 .listen('MessageSent',(event) => {
                     console.log('success');
                     this.messages.push(event.message);
