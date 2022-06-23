@@ -4,7 +4,7 @@
             <div class="card card-default">
                 <div class="card-header">Messages</div>
                 <div class="card-body p-0">
-                    <ul class="list-unstyled" style="height:300px;overflow-y: scroll;">
+                    <ul class="list-unstyled" style="height:300px;overflow-y: scroll;" v-chat-scroll>
                         <li class="p-2" v-for="(message, index) in messages" :key="index">
                             <strong>{{message.user.name}}</strong>
                             {{ message.message }}
@@ -12,7 +12,8 @@
                     </ul>
                 </div>
 
-                <input 
+                <input
+                    @keydown="sendTypingEvent"
                     @keyup.enter="sendMessage"
                     v-model="newMessage"
                     type="text" 
@@ -21,7 +22,7 @@
                     placeholder="Enter your message...">
 
             </div>
-            <span class="text-muted">user is typing...</span>
+            <span class="text-muted" v-if="activeUser">{{ activeUser.name }} is typing...</span>
         </div>
 
         <div class="col-4">
@@ -50,7 +51,9 @@
             return {
                 messages: [],
                 newMessage: '',
-                users: []
+                users: [],
+                activeUser:false,
+                typingTimer:false,
             }
         },
 
@@ -59,24 +62,37 @@
 
             Echo.join('chat')
                 .here(user => {
-                    console.log('here');
-                    console.log(user);
+                    // console.log('here');
+                    // console.log(user);
                     this.users = user;
                 })
                 .joining(user => {
-                    console.log('joining');
-                    console.log(user);
+                    // console.log('joining');
+                    // console.log(user);
                     this.users.push(user);
                 })
                 .leaving(user => {
-                    console.log('leaving');
-                    console.log(user);
+                    // console.log('leaving');
+                    // console.log(user);
                     this.users = this.users.filter(u => u.id != user.id);
                 })
                 .listen('MessageSent',(event) => {
-                    console.log('success');
+                    // console.log('success');
                     this.messages.push(event.message);
-                });
+                })
+                .listenForWhisper('typing', user => {
+                    // console.log('typing');
+                    // console.log(user);
+                    this.activeUser = user;
+
+                    if(this.typingTimer){
+                        clearTimeout(this.typingTimer);
+                    }
+
+                    this.typingTimer = setTimeout(() => {
+                        this.activeUser = false;
+                    }, 3000);
+                })
         },
         methods:{
             fetchMessages(){
@@ -94,6 +110,11 @@
                 axios.post('/messages', {message:this.newMessage});
 
                 this.newMessage = '';
+            },
+
+            sendTypingEvent(){
+                Echo.join('chat')
+                    .whisper('typing', this.user);
             }
         }
     }
