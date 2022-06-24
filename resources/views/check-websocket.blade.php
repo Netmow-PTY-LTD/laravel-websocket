@@ -10,24 +10,27 @@
                alert("WebSocket is supported by your Browser!");
                
                // Let us open a web socket
-               var ws = new WebSocket("ws://localhost:9998/echo");
+               var ws = new WebSocket("wss://socket.miyn.app:6001");
 				
                ws.onopen = function() {
                   
                   // Web Socket is connected, send data using send()
                   ws.send("Message to send");
-                  alert("Message is sent...");
+                  console.log("message is sent");
+                  // alert("Message is sent...");
                };
 				
                ws.onmessage = function (evt) { 
                   var received_msg = evt.data;
-                  alert("Message is received...");
+                  console.log("Message is received...");
+                  // alert("Message is received...");
                };
 				
                ws.onclose = function() { 
                   
                   // websocket is closed.
-                  alert("Connection is closed..."); 
+                  console.log("Connection is closed...");
+                  // alert("Connection is closed..."); 
                };
             } else {
               
