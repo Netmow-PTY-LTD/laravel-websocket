@@ -2264,25 +2264,24 @@ if (token) {
 
 
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js"); //live
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     wsHost: window.location.hostname,
-//     wsPort: 6001,
-//     wssPort: 6001,
-//     forceTLS: false,
-//     disableStats: true,
-// });
-//local enviroment
 
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: "anyKey",
   wsHost: window.location.hostname,
   wsPort: 6001,
-  forceTLS: false,
-  disableStats: true
-}); // window.Echo.channel('DemoChannel')
+  disableStats: true,
+  forceTLS: true
+}); //local enviroment
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: process.env.MIX_PUSHER_APP_KEY,
+//     wsHost: window.location.hostname,
+//     wsPort: 6001,
+//     forceTLS: false,
+//     disableStats: true,
+// });
+// window.Echo.channel('DemoChannel')
 // .listen('WebsocketDemoEvent', (e) => {
 //     console.log('success');
 //     console.log(e);
