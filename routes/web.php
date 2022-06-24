@@ -27,3 +27,7 @@ Route::get('/chats', [App\Http\Controllers\ChatsController::class, 'index'])->na
 Route::get('/messages', [App\Http\Controllers\ChatsController::class, 'fetchmessages'])->name('fetch.messages');
 Route::post('/messages', [App\Http\Controllers\ChatsController::class, 'sendMessage'])->name('send.message');
 
+Route::get('check-websocket', function(){
+    reutrn view('check-websocket');
+});
+

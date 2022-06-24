@@ -5,7 +5,6 @@
 ## Installation Instruction
 
 	- Clone the repo.
-	- Run 'cd lara-websocket'
 	- Run 'composer install'
 	- Run 'cp .env.example .env'
   	- Run 'php artisan key:genereate'
@@ -26,3 +25,9 @@
 	- laravel echo
 	- vue-chat-scroll
 
+
+## For Producttion sever
+	- https://beyondco.de/docs/laravel-websockets/getting-started/introduction
+	- https://beyondco.de/docs/laravel-websockets/basic-usage/ssl#usage-with-a-reverse-proxy-like-nginx
+	- https://www.youtube.com/watch?v=nMxbEPtINPw&list=PLfdtiltiRHWEOLZROIXNJUH6WaqZblHpE
+	- https://www.youtube.com/watch?v=H_4UubWE9NQ
