@@ -44,7 +44,6 @@ window.Echo = new Echo({
     forceTLS: true
 });
 
-
 //local enviroment
 // window.Echo = new Echo({
 //     broadcaster: 'pusher',
