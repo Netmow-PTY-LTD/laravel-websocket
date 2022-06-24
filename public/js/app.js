@@ -2233,10 +2233,6 @@ var app = new Vue({
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var laravel_echo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! laravel-echo */ "./node_modules/laravel-echo/dist/echo.js");
-var _Echo;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -2268,23 +2264,25 @@ if (token) {
 
 
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js"); //live
-
-window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]((_Echo = {
-  broadcaster: 'pusher',
-  key: "anyKey",
-  wsHost: window.location.hostname,
-  wsPort: 6001,
-  wssPort: 6001
-}, _defineProperty(_Echo, "wsPort", 6001), _defineProperty(_Echo, "forceTLS", false), _defineProperty(_Echo, "disableStats", true), _Echo)); //local enviroment
 // window.Echo = new Echo({
 //     broadcaster: 'pusher',
 //     key: process.env.MIX_PUSHER_APP_KEY,
 //     wsHost: window.location.hostname,
 //     wsPort: 6001,
+//     wssPort: 6001,
 //     forceTLS: false,
 //     disableStats: true,
 // });
-// window.Echo.channel('DemoChannel')
+//local enviroment
+
+window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
+  broadcaster: 'pusher',
+  key: "anyKey",
+  wsHost: window.location.hostname,
+  wsPort: 6001,
+  forceTLS: false,
+  disableStats: true
+}); // window.Echo.channel('DemoChannel')
 // .listen('WebsocketDemoEvent', (e) => {
 //     console.log('success');
 //     console.log(e);
