@@ -28,6 +28,6 @@ Route::get('/messages', [App\Http\Controllers\ChatsController::class, 'fetchmess
 Route::post('/messages', [App\Http\Controllers\ChatsController::class, 'sendMessage'])->name('send.message');
 
 Route::get('check-websocket', function(){
-    reutrn view('check-websocket');
+    return view('check-websocket');
 });
 
